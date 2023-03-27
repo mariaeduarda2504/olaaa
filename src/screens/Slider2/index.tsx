@@ -5,10 +5,10 @@ import {
     ComponentButtonSlider, ComponentTitleSlider
 } from '../../components';
 import { styles } from './styles';
-export function Slider1({ setPageI }: IPage) {
-    const slide1 = require("../slide1.png")
-    const slide1Texts = [
-        { id: '1', text: 'Navegue pelas nossas categorias' },
+export function Slider2({ setPageI }: IPage) {
+    const slide2Texts = [
+        { id: '1', text: 'Ração Seca Origens Premium Especial Class Carne e Frango para Cães Adultos' },
+        { id: '2', text: 'Petisco Special Dog Snacks para Cães Sabor Carne' },
     ]
     return (
         <><View style={styles.panel}>
