@@ -5,9 +5,9 @@ import {
     ComponentButtonSlider, ComponentTitleSlider
 } from '../../components';
 import { styles } from './styles';
-export function Slider1({ setPageI }: IPage) {
-    const slide1Texts = [
-        { id: '1', text: 'Navegue pelas nossas categorias'},
+export function Slider3({ setPageI }: IPage) {
+    const slide3Texts = [
+        { id: '3', text: 'Navegue pelas nossas categorias'},
     ]
     return (
         <View style={styles.container}>

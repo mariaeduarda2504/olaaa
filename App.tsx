@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction,useState } from 'react' ;
 import {
-  ScreenSlider1, ScreenSlider2
+  ScreenSlider1, ScreenSlider2, ScreenSlider3, ScreenSlider4
 } from './src/screens'
 export interface IPage {
   setPageI: Dispatch<SetStateAction<number>>
@@ -13,6 +13,12 @@ export default function App() {
       break;
     case 2:
       return <ScreenSlider2 setPageI={setPage} />
+      break;
+    case 3:
+      return <ScreenSlider3 setPageI={setPage} />
+      break;
+    case 4:
+      return <ScreenSlider4 setPageI={setPage} />
       break;
   }
 }
