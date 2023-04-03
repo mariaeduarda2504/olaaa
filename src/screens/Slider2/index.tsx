@@ -2,7 +2,7 @@ import React from "react";
 import { FlatList, View, StyleSheet } from "react-native";
 import { IPage } from "../../../App";
 import {
-    ComponentButtonSlider, ComponentTitleSlider
+    ComponentButtonSlider, ComponentTitleSlider,
 } from '../../components';
 import { styles } from './styles';
 export function Slider2({ setPageI }: IPage) {
