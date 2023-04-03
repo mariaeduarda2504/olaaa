@@ -6,6 +6,7 @@ import {
 } from '../../components';
 import { styles } from './styles';
 export function Slider1({ setPageI }: IPage) {
+  const 
     const slide1Texts = [
         { id: '1', text: 'Navegue pelas nossas categorias'},
     ]
