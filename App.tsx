@@ -23,8 +23,6 @@ export default function App() {
     case 4:
       return <ScreenSlider4 setPageI={setPage} />
       break;
-    case 5:
-        return <ScreenLogin setPageI={setPage} />
     default:
       return <Navigation />
       break;
