@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
 import { Dispatch, SetStateAction,useState } from 'react' ;
 import {
+  ScreenLogin,
   ScreenSlider1, ScreenSlider2, ScreenSlider3, ScreenSlider4
 } from './src/screens'
 import {Navigation} from "./src/navigations"
@@ -22,6 +23,8 @@ export default function App() {
     case 4:
       return <ScreenSlider4 setPageI={setPage} />
       break;
+    case 5:
+        return <ScreenLogin setPageI={setPage} />
     default:
       return <Navigation />
       break;
