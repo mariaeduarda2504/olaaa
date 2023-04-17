@@ -4,8 +4,9 @@ import {styles} from "./styles"
 import { MaterialCommunityIcons, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { colors } from "../../styles/colors";
 import { ComponentButtonInterface } from "../../components";
+import { LoginTypes } from "../../navigations/login.navigation";
 
-export function Cadastrar() {
+export function Cadastrar({navigation}:LoginTypes) {
     return (
         <View style={styles.container}>
             <KeyboardAvoidingView>
@@ -39,7 +40,7 @@ export function Cadastrar() {
                     />
                 </View>
                 <ComponentButtonInterface title="Salvar" type="primary" onPressI={()=>console.log("cadastrar")}/>
-                <ComponentButtonInterface title="Voltar" type="primary" onPressI={()=>console.log("Login")}/>
+                <ComponentButtonInterface title="Voltar" type="primary" onPressI={()=>navigation.navigate("Login")}/>
             </KeyboardAvoidingView>
         </View>
     )
