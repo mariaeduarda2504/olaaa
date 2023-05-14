@@ -4,16 +4,15 @@ export const styles = StyleSheet.create({
     listMarker: {
         margin: 10,
         marginTop: 60, 
-        flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'center',
     },
     textMarker: {
         marginLeft: 5,
         fontSize: 20
     },
-    img: {
-        width: 225,
-        height: 32
-        
+    image: {
+        resizeMode: "contain",
     }
 })
