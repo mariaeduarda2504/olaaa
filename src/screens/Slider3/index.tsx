@@ -15,7 +15,7 @@ export function Slider3({ setPageI }: IPage) {
         return (
             <View style={styles.container}>
               <View style={styles.panel}>
-                <ComponentTitleSlider titleI='Rações e Petiscos' />
+                <ComponentTitleSlider titleI='Brinquedos e Acessórios' />
                 <FlatList
           data={slide3Texts}
           renderItem={({ item }) => (
