@@ -3,7 +3,9 @@ import { createStackNavigator, StackNavigationProp } from '@react-navigation/sta
 import { ScreenCadastrar, ScreenLogin } from "../screens"
 type LoginStackParamList = {
   Login: undefined
-  Cadastrar: undefined;
+  Cadastrar: undefined
+  Tab: undefined
+  Drawer: undefined;
 };
 type LoginScreenNavigation = StackNavigationProp<LoginStackParamList, 'Login'>
 export type LoginTypes = {

@@ -12,7 +12,7 @@ export function Slider3({ setPageI }: IPage) {
     return (
         <View style={styles.container}>
           <View style={styles.panel}>
-            <ComponentTitleSlider titleI='PetMiau' />
+            <ComponentTitleSlider titleI='Brinquedos e Acessórios' />
           </View>
           <View style={styles.buttonSlider}>
             <ComponentButtonSlider onPressI={() => setPageI(1)} />

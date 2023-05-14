@@ -10,12 +10,19 @@ import { styles } from "./styles";
 
 export function Slider1({ setPageI }: IPage) {
   const image1 = require("../../assets/slider1.png");
-  const slide1Texts = [{ id: "1", text: "Navegue pelas nossas categorias" }];
+  const slide1Texts = [{ id: "1", text: "Navegue pelas nossas categorias" },
+  { id: "2", text: "Rações e Petiscos" },
+  { id: "3", text: "Brinquedos e Acessórios" },
+  { id: "4", text: "Farmácia" }
+  
+  
+
+];
 
   return (
     <View style={styles.container}>
       <View style={styles.panel}>
-        <ComponentTitleSlider titleI="Rações e Petiscos" />
+        <ComponentTitleSlider titleI='PetMiAu' />
         <FlatList
           data={slide1Texts}
           renderItem={({ item }) => (

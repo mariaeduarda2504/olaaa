@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text, KeyboardAvoidingView, TextInput } from "react-native";
+import { View, Text, KeyboardAvoidingView } from "react-native";
 import {styles} from "./styles";
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { colors } from "../../styles/colors";
+import {TextInput} from "react-native-gesture-handler";
 import { ComponentButtonInterface } from "../../components";
 import {LoginTypes} from "../../navigations/login.navigation"
 
