@@ -20,7 +20,7 @@ export function TabNavigation() {
           backgroundColor: colors.primary
         },
         headerTintColor: colors.white,
-        tabBarActiveBackgroundColor: colors.primary, 
+        tabBarActiveBackgroundColor: colors.secondary, 
         tabBarActiveTintColor: colors.white
       }}
     >

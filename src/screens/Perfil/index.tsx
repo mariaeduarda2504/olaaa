@@ -10,8 +10,8 @@ export function Perfil({ navigation}: TabTypes) {
     }
     return (
         <View style={styles.container}>
-            <Text>Perfil</Text>
-            <ComponentButtonInterface title="Voltar" type="secondary" onPressI={handleVoltar}/>
+            
+            <ComponentButtonInterface title="Voltar" type="third" onPressI={handleVoltar}/>
         </View>
     )
 }
