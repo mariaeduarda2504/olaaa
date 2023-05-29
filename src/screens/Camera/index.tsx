@@ -1,42 +1,32 @@
-import { Camera, CameraCapturedPicture, CameraType } from 'expo-camera';
+import { Camera, CameraCapturedPicture, CameraType, FaceDetectionResult } from 'expo-camera';
 import React from 'react';
 import { useRef, useState } from 'react';
 import { Entypo } from '@expo/vector-icons';
-import { Button, Text, Image, TouchableOpacity, View } from 'react-native';
+import { Button, Text, Image, TouchableOpacity, View, Alert } from 'react-native';
 import { ComponentButtonInterface, ComponentButtonTakePicture } from '../../components';
 import { styles } from './styles';
 import * as MediaLibrary from 'expo-media-library';
 import * as ImagePicker from 'expo-image-picker';
-interface IPhoto {
-  height: string
-  uri: string
-  width: string
-}
+import * as FaceDetector from 'expo-face-detector';
+import { BarCodeScanner, BarCodeScannerResult } from 'expo-barcode-scanner';
 
 export function CameraScreen() {
   const [type, setType] = useState(CameraType.back);
   const [permissionCamera, requestPermissionCamera] = Camera.useCameraPermissions()
   const [photo, setPhoto] = useState<CameraCapturedPicture | ImagePicker.ImagePickerAsset>()
-  const [permission, requestPermission] = Camera.useCameraPermissions()
+  const [permissionMedia, requestPermissionMedia] = MediaLibrary.usePermissions()
   const ref = useRef<Camera>(null)
   const [takePhoto, setTakePhoto] = useState(false)
+  const [permissionQrCode, requestPermissionQrCode] = BarCodeScanner.usePermissions();
+  const [scanned, setScanned] = useState(false);
+  const [face, setFace] = useState<FaceDetector.FaceFeature>()
 
-  if (!permission) {
+  if (!permissionCamera) {
     // Camera permissions are still loading
     return <View />;
   }
 
-  if (!permission.granted) {
-    // Camera permissions are not granted yet
-    return (
-      <View style={styles.container}>
-        <Text style={{ textAlign: 'center' }}>Nós precisamos da sua permissão para acessar sua câmera</Text>
-        <Button onPress={requestPermission} title="grant permission" />
-      </View>
-    );
-  }
-
-  if (!permission.granted) {
+  if (!permissionCamera.granted) {
     // Camera permissions are not granted yet
     return (
       <View style={styles.container}>
@@ -50,31 +40,72 @@ export function CameraScreen() {
     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
   }
 
-  async function takePicture(){
-    if(ref.current){
+  async function takePicture() {
+    if(ref.current) {
       const picture = await ref.current.takePictureAsync()
-      console.log(picture)
       setPhoto(picture)
+      setTakePhoto(false)
     }
+  }
+
+  if (!permissionQrCode) {
+    // QrCode permissions are still loading
+    return <View />;
+  }
+
+  if (!permissionQrCode.granted) {
+    // QrCode permissions are not granted yet
+    return (
+      <View style={styles.container}>
+        <Text style={{ textAlign: 'center' }}>Nós precisamos da sua permissão para acessar seu leitor de QrCode</Text>
+        <Button onPress={requestPermissionQrCode} title="grant permission" />
+      </View>
+    );
+  }
+
+  const handleBarCodeScanned = ( { type, data }: BarCodeScannerResult) => {
+    setScanned(true);
+    alert(data);
+  }
+
+  const handleFacesDetected = ({ faces }: FaceDetectionResult): void => {
+    if (faces.length >0 ) {
+      const faceDetect = faces[0] as FaceDetector.FaceFeature
+      setFace(faceDetect)
+    }else{
+      setFace(undefined)
+    }
+    };
+
+
+  if (!permissionMedia) {
+    return <View />;
+  }
+
+  if (!permissionMedia.granted) {
+    return (
+      <View style={styles.container}>
+        <Text style={{ textAlign: 'center' }}>Precisa de sua permissão para salvar a imagem</Text>
+        <Button onPress={requestPermissionMedia} title="permita o acesso" />
+      </View>
+    );
+  }
+
   async function savePhoto() {
     const asset = await MediaLibrary.createAssetAsync(photo!.uri)
     MediaLibrary.createAlbumAsync("Images", asset, false)
-    Alert.alert("Imagem salva com sucesso!")
+    Alert.alert("Imagem salva com sucesso!")    
   }
+
   async function pickImage() {
-    const result= await ImagePicker.launchImageLibraryAsync({
+    const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [3,4],
       quality: 1
     })
     if (!result.canceled) {
       setPhoto(result.assets[0])
     }
-  }
-}
-
-  function pickImage(): void {
-    throw new Error('Function not implemented.');
   }
 
   return (
@@ -84,14 +115,25 @@ export function CameraScreen() {
         <TouchableOpacity onPress={toggleCameraType} style={styles.button}>
           <Entypo name="cycle" size={42} color="black" />
         </TouchableOpacity>
-        <Camera style={styles.camera} type={type} ref={ref} />
+        <Camera style={styles.camera} type={type} ref={ref}
+          onFacesDetected={handleFacesDetected}
+      faceDetectorSettings={{
+        mode
+      }}
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+          />
         <ComponentButtonTakePicture onPress={takePicture} />
+        <ComponentButtonInterface title="Scannear Novamente" type="primary" onPressI={()=> setScanned(false)} />
       </>
     ) : (
       <>
-        <ComponentButtonInterface title="Tirar foto" type="primary" onPressI={takePicture} />
-        <Image source={{ uri: photo.uri }} style={styles.img} />
-        <ComponentButtonInterface title="Salvar imagem" type="primary" onPressI={savePhoto} />
+        <ComponentButtonInterface title="Tirar foto" type="primary" onPressI={()=> setTakePhoto(true)} />
+        {photo && photo.uri && (
+          <>
+          <Image source={{ uri: photo.uri }} style={styles.img} />
+          <ComponentButtonInterface title="Salvar imagem" type="primary" onPressI={savePhoto} />
+          </>
+        )}
         <ComponentButtonInterface title="Abrir imagem" type="primary" onPressI={pickImage} />
       </>
     )}
