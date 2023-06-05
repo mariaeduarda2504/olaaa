@@ -109,35 +109,47 @@ export function CameraScreen() {
   }
 
   return (
-  <View style={styles.container}>
-    {takePhoto ? (
-      <>
-        <TouchableOpacity onPress={toggleCameraType} style={styles.button}>
-          <Entypo name="cycle" size={42} color="black" />
-        </TouchableOpacity>
-        <Camera style={styles.camera} type={type} ref={ref}
-          onFacesDetected={handleFacesDetected}
-      faceDetectorSettings={{
-        mode
-      }}
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          />
-        <ComponentButtonTakePicture onPress={takePicture} />
-        <ComponentButtonInterface title="Scannear Novamente" type="primary" onPressI={()=> setScanned(false)} />
-      </>
-    ) : (
-      <>
-        <ComponentButtonInterface title="Tirar foto" type="primary" onPressI={()=> setTakePhoto(true)} />
-        {photo && photo.uri && (
+  <>
+    <View style={styles.container}>
+        {takePhoto ? (
           <>
-          <Image source={{ uri: photo.uri }} style={styles.img} />
-          <ComponentButtonInterface title="Salvar imagem" type="primary" onPressI={savePhoto} />
+            <TouchableOpacity onPress={toggleCameraType} style={styles.button}>
+              <Entypo name="cycle" size={42} color="black" />
+            </TouchableOpacity>
+            <View style={styles.sorriso}>
+      {face&&face.smilingProbability && face.smilingProbability> 0.5?(
+        <Text>Sorrindo</Text>
+      ): (
+        <Text>Não</Text>
+      )}
+    </View>
+            <Camera style={styles.camera} type={type} ref={ref}
+              onFacesDetected={handleFacesDetected}
+              faceDetectorSettings={{
+                mode: FaceDetector.FaceDetectorMode.accurate,
+                detectLandMarks: FaceDetector.FaceDetectorLandmarks.all,
+                runClassifications: FaceDetector.FaceDetectorClassifications.all,
+                minDetectionInterval:1000,
+                tracking:true,
+              }}
+              onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} />
+              
+            <ComponentButtonTakePicture onPress={takePicture} />
+            <ComponentButtonInterface title="Scannear Novamente" type="primary" onPressI={() => setScanned(false)} />
+          </>
+        ) : (
+          <>
+            <ComponentButtonInterface title="Tirar foto" type="primary" onPressI={() => setTakePhoto(true)} />
+            {photo && photo.uri && (
+              <>
+                <Image source={{ uri: photo.uri }} style={styles.img} />
+                <ComponentButtonInterface title="Salvar imagem" type="primary" onPressI={savePhoto} />
+              </>
+            )}
+            <ComponentButtonInterface title="Abrir imagem" type="primary" onPressI={pickImage} />
           </>
         )}
-        <ComponentButtonInterface title="Abrir imagem" type="primary" onPressI={pickImage} />
-      </>
-    )}
 
-    </View>
+      </View></>
   );
 }
